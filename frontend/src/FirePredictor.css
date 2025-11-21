@@ -1,0 +1,135 @@
+/* Trang nền và căn giữa */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  padding: 24px;
+}
+
+/* Khung nhập liệu */
+.card {
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 28px 32px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Tiêu đề */
+.card h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+}
+
+/* Grid form 2 cột */
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 20px;
+}
+
+/* Nhóm label + input */
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label */
+.field label {
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+/* Input */
+.field input {
+  height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+}
+
+/* Focus */
+.field input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Ẩn mũi tên input number */
+.field input[type="number"]::-webkit-outer-spin-button,
+.field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Standards-based (works in modern Firefox and others) */
+input[type="number"] {
+  appearance: textfield; /* replaces -moz-appearance */
+}
+
+/* Nút dự đoán */
+.btn {
+  grid-column: 1 / -1;
+  height: 44px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #1e40af;
+}
+
+/* Kết quả */
+.result {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.result h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #111827;
+  text-align: center;
+}
+
+.result p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #374151;
+  text-align: center;
+}
+.page {
+  min-height: 100vh;              /* Chiều cao toàn màn hình */
+  display: flex;                  /* Kích hoạt Flexbox */
+  justify-content: center;        /* Căn giữa ngang */
+  align-items: center;            /* Căn giữa dọc */
+  background-color: #f3f4f6;      /* Màu nền nhẹ */
+  padding: 24px;
+}

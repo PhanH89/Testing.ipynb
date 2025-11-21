@@ -1,45 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import "./FirePredictor.css";
+export default function PredictionForm() {
+  const [formData, setFormData] = useState({
+    Temperature_C: "",
+    Humidity_percent: "",
+    TVOC_ppb: "",
+    eCO2_ppm: "",
+    Raw_H2: "",
+    Raw_Ethanol: "",
+    Pressure_hPa: "",
+    PM1_0: "",
+    PM2_5: "",
+    NC0_5: "",
+    NC1_0: "",
+    NC2_5: "",
+  });
 
-export default function PredictionTable() {
-  const [data, setData] = useState([]);
+  const [result, setResult] = useState(null);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/get-predicted-data")
-      .then((res) => setData(res.data))
-      .catch((err) => console.error("Lỗi khi lấy dữ liệu dự đoán:", err));
-  }, []);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // gửi dữ liệu JSON sang backend
+      const res = await axios.post("http://localhost:8000/predict", formData);
+      setResult(res.data);
+    } catch (error) {
+      console.error("Lỗi gửi dữ liệu:", error);
+      alert("Không thể gửi dữ liệu đến server.");
+    }
+  };
 
   return (
-    <div>
-      <h2>Kết quả dự đoán từ file CSV</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Nhiệt độ</th>
-            <th>Độ ẩm</th>
-            <th>TVOC</th>
-            <th>eCO2</th>
-            <th>Dự đoán</th>
-            <th>Xác suất cháy (%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row, i) => (
-            <tr key={i}>
-              <td>{i + 1}</td>
-              <td>{row["Temperature [C]"]}</td>
-              <td>{row["Humidity [%]"]}</td>
-              <td>{row["TVOC [ppb]"]}</td>
-              <td>{row["eCO2 [ppm]"]}</td>
-              <td>{row.prediction === 1 ? "🔥 Nguy cơ" : "✅ An toàn"}</td>
-              <td>{row["prob_fire_true_%"]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="page">
+      <div className="card">
+        <div>
+          <h2>Nhập dữ liệu cảm biến</h2>
+          <form onSubmit={handleSubmit}>
+            {Object.keys(formData).map((key) => (
+              <div key={key} style={{ marginBottom: "8px" }}>
+                <label>{key}: </label>
+                <input
+                  type="number"
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                  placeholder="Nhập số"
+                  required
+                />
+              </div>
+            ))}
+            <button type="submit">Dự đoán</button>
+          </form>
+
+          {result && (
+            <div style={{ marginTop: "20px" }}>
+              <h3>Kết quả dự đoán:</h3>
+              <p>
+                Dự đoán:{" "}
+                {result.prediction === 1 ? "🔥 Nguy cơ cháy" : "✅ An toàn"}
+              </p>
+              <p>Xác suất cháy: {result["probability_fire_%"]}%</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
